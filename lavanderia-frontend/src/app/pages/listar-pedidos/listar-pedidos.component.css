@@ -1,0 +1,12 @@
+/* Estilos específicos para a lista de pedidos */.pedido-table {
+    margin-top: 20px;
+  }
+  
+  .pedido-table th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .pedido-table tr:hover {
+    background-color: #f1f1f1;
+  }

@@ -1,0 +1,29 @@
+<h2>Lista de Pedidos</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Cliente</th>
+      <th>Tipo de Serviço</th>
+      <th>Roupas</th>
+      <th>Prazo</th>
+      <th>Estado</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pedido of pedidos">
+      <td>{{ pedido.id }}</td>
+      <td>{{ pedido.clienteNome }}</td>
+      <td>{{ pedido.tipoServico }}</td>
+      <td>{{ pedido.roupas.join(', ') }}</td>
+      <td>{{ pedido.prazo }}</td> <!-- Exibe a data no formato yyyy-MM-dd -->
+      <td>{{ pedido.status }}</td>
+      <td>
+        <button (click)="editarPedido(pedido.id)">Editar</button>
+        <button (click)="excluirPedido(pedido.id)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button routerLink="/pedidos/novo">Criar Novo Pedido</button>
