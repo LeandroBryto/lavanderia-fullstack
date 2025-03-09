@@ -1,0 +1,16 @@
+<h2>Criar Pedido</h2>
+<form (ngSubmit)="criarPedido()">
+  <label for="clienteNome">Nome do Cliente:</label>
+  <input type="text" id="clienteNome" [(ngModel)]="pedido.clienteNome" name="clienteNome" required>
+
+  <label for="tipoServico">Tipo de Serviço:</label>
+  <input type="text" id="tipoServico" [(ngModel)]="pedido.tipoServico" name="tipoServico" required>
+
+  <label for="roupas">Roupas:</label>
+  <input type="text" id="roupas" [(ngModel)]="pedido.roupas" name="roupas" required>
+
+  <label for="prazo">Prazo:</label>
+<input type="date" id="prazo" [(ngModel)]="pedido.prazo" name="prazo" required>
+
+  <button type="submit">Criar Pedido</button>
+</form>
