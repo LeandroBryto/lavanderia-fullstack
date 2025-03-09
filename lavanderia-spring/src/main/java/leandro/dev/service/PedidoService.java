@@ -23,6 +23,10 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
+    public Pedido atualizarPedido(Pedido pedido) {
+        return pedidoRepository.save(pedido);
+    }
+
     public Pedido buscarPedidoPorId(Long id) {
         return pedidoRepository.findByIdWithCliente(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Pedido não encontrado"));

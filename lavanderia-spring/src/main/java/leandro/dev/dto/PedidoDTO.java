@@ -1,5 +1,6 @@
 package leandro.dev.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.FutureOrPresent;
 
 import java.time.LocalDate;
@@ -10,7 +11,8 @@ public record PedidoDTO(
         String clienteNome, // Nome do cliente (não o objeto Cliente completo)
         String tipoServico,
         List<String> roupas,
-        @FutureOrPresent(message = "O prazo deve ser uma data futura ou igual à data atual")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
         LocalDate prazo,
         String status
-) {}
+) {
+}

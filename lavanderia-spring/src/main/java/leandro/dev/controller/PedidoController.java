@@ -3,6 +3,7 @@ package leandro.dev.controller;
 
 import jakarta.validation.Valid;
 import leandro.dev.dto.PedidoDTO;
+import leandro.dev.exception.RecursoNaoEncontradoException;
 import leandro.dev.model.Cliente;
 import leandro.dev.model.Pedido;
 import leandro.dev.repository.ClienteRepository;
@@ -32,15 +33,44 @@ public class PedidoController {
 
     @PostMapping
     public PedidoDTO criarPedido(@Valid @RequestBody PedidoDTO pedidoDTO) {
+        System.out.println("PedidoDTO recebido: " + pedidoDTO); // Log para depuração
         Pedido pedido = converterParaEntidade(pedidoDTO);
+        System.out.println("Pedido convertido: " + pedido); // Log para depuração
         Pedido pedidoSalvo = pedidoService.criarPedido(pedido);
         return converterParaDTO(pedidoSalvo);
     }
+
 
     @GetMapping("/{id}")
     public PedidoDTO buscarPedidoPorId(@PathVariable Long id) {
         Pedido pedido = pedidoService.buscarPedidoPorId(id);
         return converterParaDTO(pedido);
+    }
+
+    @PutMapping("/editar/{id}")
+    public PedidoDTO atualizarPedido(@PathVariable Long id, @Valid @RequestBody PedidoDTO pedidoDTO) {
+        Pedido pedidoExistente = pedidoService.buscarPedidoPorId(id);
+
+        if (pedidoExistente == null) {
+            throw new RecursoNaoEncontradoException("Pedido não encontrado com ID: " + id);
+        }
+
+        pedidoExistente.setTipoServico(pedidoDTO.tipoServico());
+        pedidoExistente.setRoupas(pedidoDTO.roupas());
+        pedidoExistente.setPrazo(pedidoDTO.prazo());
+        pedidoExistente.setStatus(pedidoDTO.status());
+
+        Cliente cliente = clienteRepository.findByNome(pedidoDTO.clienteNome())
+                .orElseGet(() -> {
+                    Cliente novoCliente = new Cliente();
+                    novoCliente.setNome(pedidoDTO.clienteNome());
+                    return clienteRepository.save(novoCliente);
+                });
+
+        pedidoExistente.setCliente(cliente);
+
+        Pedido pedidoAtualizado = pedidoService.atualizarPedido(pedidoExistente);
+        return converterParaDTO(pedidoAtualizado);
     }
 
     @DeleteMapping("/{id}")
@@ -49,13 +79,13 @@ public class PedidoController {
     }
 
     private PedidoDTO converterParaDTO(Pedido pedido) {
+        System.out.println("Pedido convertido para DTO: " + pedido); // Log para depuração
         if (pedido.getCliente() == null) {
             throw new IllegalStateException("Cliente não pode ser nulo");
         }
-
         return new PedidoDTO(
                 pedido.getId(),
-                pedido.getCliente().getNome(), // Aqui deve funcionar se o cliente não for nulo
+                pedido.getCliente().getNome(),
                 pedido.getTipoServico(),
                 pedido.getRoupas(),
                 pedido.getPrazo(),
