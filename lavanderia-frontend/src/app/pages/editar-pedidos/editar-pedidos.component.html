@@ -1,0 +1,17 @@
+<h2>Editar Pedido</h2>
+<form (ngSubmit)="atualizarPedido()">
+  <label for="clienteNome">Nome do Cliente:</label>
+  <input type="text" id="clienteNome" [(ngModel)]="pedido.clienteNome" name="clienteNome" required>
+
+  <label for="tipoServico">Tipo de Serviço:</label>
+  <input type="text" id="tipoServico" [(ngModel)]="pedido.tipoServico" name="tipoServico" required>
+
+  <label for="roupas">Roupas (separadas por vírgulas):</label>
+  <input type="text" id="roupas" [(ngModel)]="pedido.roupas" name="roupas" required placeholder="Exemplo: Camiseta, Calça Jeans">
+
+  <label for="prazo">Prazo:</label>
+  <input type="date" id="prazo" [(ngModel)]="pedido.prazo" name="prazo" required>
+
+  <button type="submit">Atualizar Pedido</button>
+</form>
+
