@@ -18,9 +18,11 @@ export class EditarPedidoComponent implements OnInit {
     clienteNome: '',
     tipoServico: '',
     roupas: [],
-    prazo: '',
+    prazo: '', // Formato yyyy-MM-dd
     status: 'EM_ANDAMENTO'
   };
+
+  roupasInput: string = ''; // Propriedade para armazenar o input do usuário como string
 
   constructor(
     private pedidoService: PedidoService,
@@ -40,7 +42,10 @@ export class EditarPedidoComponent implements OnInit {
 
   carregarPedido(id: number): void {
     this.pedidoService.buscarPedidoPorId(id).subscribe({
-      next: (data) => this.pedido = data,
+      next: (data) => {
+        this.pedido = data;
+        this.roupasInput = this.pedido.roupas.join(', '); // Converte a lista de roupas para uma string
+      },
       error: (error) => {
         console.error('Erro ao carregar pedido:', error);
         alert('Erro ao carregar o pedido. Verifique a conexão com o servidor.');
@@ -50,6 +55,12 @@ export class EditarPedidoComponent implements OnInit {
   }
 
   atualizarPedido(): void {
+    // Transforma a string de roupas em uma lista
+    this.pedido.roupas = this.roupasInput.split(',').map(item => item.trim());
+
+    // Garante que o prazo esteja no formato yyyy-MM-dd
+    this.pedido.prazo = this.formatarData(this.pedido.prazo);
+
     this.pedidoService.atualizarPedido(this.pedido.id, this.pedido).subscribe({
       next: () => {
         alert('Pedido atualizado com sucesso!');
@@ -60,5 +71,14 @@ export class EditarPedidoComponent implements OnInit {
         alert('Erro ao atualizar o pedido. Tente novamente.');
       }
     });
+  }
+
+  // Método para formatar a data no padrão yyyy-MM-dd
+  private formatarData(data: string): string {
+    const date = new Date(data);
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Adiciona zero à esquerda
+    const day = ('0' + date.getDate()).slice(-2); // Adiciona zero à esquerda
+    return `${year}-${month}-${day}`;
   }
 }

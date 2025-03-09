@@ -4,6 +4,7 @@ import { ListarPedidosComponent } from './pages/listar-pedidos/listar-pedidos.co
 import { CriarPedidoComponent } from './pages/criar-pedido/criar-pedido.component';
 import { EditarPedidoComponent } from './pages/editar-pedidos/editar-pedidos.component';
 
+
 export const routes: Routes = [
   { path: '', redirectTo: '/pedidos', pathMatch: 'full' }, // Rota padrão
   { path: 'pedidos', component: ListarPedidosComponent }, // Listar pedidos

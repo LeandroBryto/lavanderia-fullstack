@@ -8,10 +8,10 @@ import java.util.List;
 
 public record PedidoDTO(
         Long id,
-        String clienteNome, // Nome do cliente (não o objeto Cliente completo)
+        String clienteNome,
         String tipoServico,
         List<String> roupas,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd") // Alterado para yyyy-MM-dd
         LocalDate prazo,
         String status
 ) {

@@ -47,7 +47,7 @@ public class PedidoController {
         return converterParaDTO(pedido);
     }
 
-    @PutMapping("/editar/{id}")
+    @PutMapping("/{id}")
     public PedidoDTO atualizarPedido(@PathVariable Long id, @Valid @RequestBody PedidoDTO pedidoDTO) {
         Pedido pedidoExistente = pedidoService.buscarPedidoPorId(id);
 

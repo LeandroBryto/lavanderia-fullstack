@@ -1,5 +1,6 @@
 <h2>Editar Pedido</h2>
 <form (ngSubmit)="atualizarPedido()">
+  
   <label for="clienteNome">Nome do Cliente:</label>
   <input type="text" id="clienteNome" [(ngModel)]="pedido.clienteNome" name="clienteNome" required>
 
@@ -13,5 +14,7 @@
   <input type="date" id="prazo" [(ngModel)]="pedido.prazo" name="prazo" required>
 
   <button type="submit">Atualizar Pedido</button>
+  
 </form>
+
 
