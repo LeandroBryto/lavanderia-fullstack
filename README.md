@@ -29,7 +29,7 @@ A aplicação está **funcionando**, mas será **atualizada em breve** com novas
 
 ### **Backend (Spring Boot)**
 - **Java 17+**  
-- **Spring Boot **  
+- **Spring Boot**  
 - **Spring Data JPA**  
 - **MySQL**  
 - **Spring Boot Actuator**  
